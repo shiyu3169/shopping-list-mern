@@ -11,7 +11,7 @@ import {
 } from 'reactstrap';
 
 const AppNavbar = () => {
-  const [isOpen, setIsOpen] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div>
