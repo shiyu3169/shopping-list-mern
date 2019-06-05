@@ -2,14 +2,10 @@ import React, { useEffect } from 'react';
 import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
-import { getItems } from '../actions/itemActions';
+import { getItems, deleteItem } from '../actions/itemActions';
 import PropTypes from 'prop-types';
 
-const ShoppingList = ({ item }) => {
-  useEffect(() => {
-    getItems();
-  });
-
+const ShoppingList = props => {
   return (
     <Container>
       {/* <Button
@@ -26,19 +22,19 @@ const ShoppingList = ({ item }) => {
       </Button> */}
       <ListGroup>
         <TransitionGroup className='shopping-list'>
-          {item.items.map(({ id, name }) => (
+          {props.item.items.map(({ id, name }) => (
             <CSSTransition key={id} timeout={500} classNames='fade'>
               <ListGroupItem>
-                {/* <Button
+                <Button
                   className='remove-btn'
                   color='danger'
                   size='sm'
                   onClick={() => {
-                    setItems(items.filter(item => item.id !== id));
+                    props.deleteItem(id);
                   }}
                 >
                   &times;
-                </Button> */}
+                </Button>
                 {name}
               </ListGroupItem>
             </CSSTransition>
@@ -60,5 +56,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getItems }
+  { getItems, deleteItem }
 )(ShoppingList);
