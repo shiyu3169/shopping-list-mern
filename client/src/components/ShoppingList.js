@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import uuid from 'uuid';
+import { connect } from 'react-redux';
+import { getItems } from '../actions/itemActions';
+import PropTypes from 'prop-types';
 
-const ShoppingList = () => {
-  const [items, setItems] = useState([
-    { id: uuid(), name: 'Eggs' },
-    { id: uuid(), name: 'Milk' },
-    { id: uuid(), name: 'Steak' },
-    { id: uuid(), name: 'Water' }
-  ]);
+const ShoppingList = ({ item }) => {
+  useEffect(() => {
+    getItems();
+  });
+
   return (
     <Container>
-      <Button
+      {/* <Button
         color='dark'
         style={{ marginBottom: '2rem' }}
         onClick={() => {
@@ -23,13 +23,13 @@ const ShoppingList = () => {
         }}
       >
         Add Item
-      </Button>
+      </Button> */}
       <ListGroup>
         <TransitionGroup className='shopping-list'>
-          {items.map(({ id, name }) => (
+          {item.items.map(({ id, name }) => (
             <CSSTransition key={id} timeout={500} classNames='fade'>
               <ListGroupItem>
-                <Button
+                {/* <Button
                   className='remove-btn'
                   color='danger'
                   size='sm'
@@ -38,7 +38,7 @@ const ShoppingList = () => {
                   }}
                 >
                   &times;
-                </Button>
+                </Button> */}
                 {name}
               </ListGroupItem>
             </CSSTransition>
@@ -49,4 +49,16 @@ const ShoppingList = () => {
   );
 };
 
-export default ShoppingList;
+ShoppingList.propTypes = {
+  getItems: PropTypes.func.isRequired,
+  item: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  item: state.item
+});
+
+export default connect(
+  mapStateToProps,
+  { getItems }
+)(ShoppingList);
