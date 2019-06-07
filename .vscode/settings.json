@@ -1,5 +1,8 @@
 {
   "cSpell.ignoreWords": [
-    "reactstrap"
+    "devtools",
+    "extension",
+    "reactstrap",
+    "redux"
   ]
 }

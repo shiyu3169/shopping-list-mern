@@ -10,7 +10,6 @@ import {
   Label,
   Input
 } from 'reactstrap';
-import uuid from 'uuid';
 import { addItem } from '../actions/itemActions';
 
 const ItemModal = props => {
@@ -24,11 +23,11 @@ const ItemModal = props => {
   const onSubmit = e => {
     e.preventDefault();
     const newItem = {
-      id: uuid(),
       name: name
     };
     // Add item via addItem action
     props.addItem(newItem);
+    toggle();
   };
 
   const onChange = e => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
@@ -6,19 +6,23 @@ import { getItems, deleteItem } from '../actions/itemActions';
 import PropTypes from 'prop-types';
 
 const ShoppingList = props => {
+  const { getItems } = props;
+
+  useEffect(() => getItems(), [getItems]);
+
   return (
     <Container>
       <ListGroup>
         <TransitionGroup className='shopping-list'>
-          {props.item.items.map(({ id, name }) => (
-            <CSSTransition key={id} timeout={500} classNames='fade'>
+          {props.item.items.map(({ _id, name }) => (
+            <CSSTransition key={_id} timeout={500} classNames='fade'>
               <ListGroupItem>
                 <Button
                   className='remove-btn'
                   color='danger'
                   size='sm'
                   onClick={() => {
-                    props.deleteItem(id);
+                    props.deleteItem(_id);
                   }}
                 >
                   &times;
