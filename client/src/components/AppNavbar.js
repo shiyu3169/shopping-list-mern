@@ -6,9 +6,9 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
   Container
 } from 'reactstrap';
+import RegisterModal from './auth/RegisterModal';
 
 const AppNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +22,7 @@ const AppNavbar = () => {
           <Collapse isOpen={isOpen} navbar>
             <Nav className='ml-auto' navbar>
               <NavItem>
-                <NavLink href='https://www.shiyu-w.com'>Shiyu</NavLink>
+                <RegisterModal />
               </NavItem>
             </Nav>
           </Collapse>
