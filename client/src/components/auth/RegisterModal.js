@@ -50,7 +50,6 @@ const RegisterModal = props => {
   const { error, isAuthenticated } = props;
 
   useEffect(() => {
-    console.log(error);
     if (error.id === 'REGISTER_FAIL') {
       setMsg(error.msg);
     } else {
@@ -58,7 +57,7 @@ const RegisterModal = props => {
     }
 
     // If authenticated, close modal
-    console.log(isAuthenticated);
+
     if (modal && isAuthenticated) {
       toggle();
     }

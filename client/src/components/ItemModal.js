@@ -11,6 +11,7 @@ import {
   Input
 } from 'reactstrap';
 import { addItem } from '../actions/itemActions';
+import PropTypes from 'prop-types';
 
 const ItemModal = props => {
   const [modal, setModal] = useState(false);
@@ -36,15 +37,20 @@ const ItemModal = props => {
 
   return (
     <div>
-      <Button
-        color='dark'
-        style={{ marginBottom: '2rem' }}
-        onClick={() => {
-          setModal(!modal);
-        }}
-      >
-        Add Item
-      </Button>
+      {props.isAuthenticated ? (
+        <Button
+          color='dark'
+          style={{ marginBottom: '2rem' }}
+          onClick={() => {
+            setModal(!modal);
+          }}
+        >
+          Add Item
+        </Button>
+      ) : (
+        <h4 className='mb-3 ml-4'>Please log in to manage items</h4>
+      )}
+
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Add to Shopping List</ModalHeader>
         <ModalBody>
@@ -70,7 +76,15 @@ const ItemModal = props => {
   );
 };
 
+ItemModal.propTypes = {
+  isAuthenticated: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { addItem }
 )(ItemModal);

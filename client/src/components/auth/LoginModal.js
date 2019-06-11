@@ -40,7 +40,6 @@ const LoginModal = props => {
   const { error, isAuthenticated } = props;
 
   useEffect(() => {
-    console.log(error);
     if (error.id === 'LOGIN_FAIL') {
       setMsg(error.msg);
     } else {
@@ -48,7 +47,7 @@ const LoginModal = props => {
     }
 
     // If authenticated, close modal
-    console.log(isAuthenticated);
+
     if (modal && isAuthenticated) {
       toggle();
     }
