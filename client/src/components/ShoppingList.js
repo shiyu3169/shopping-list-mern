@@ -17,9 +17,10 @@ const ShoppingList = props => {
           {props.item.items.map(({ _id, name }) => (
             <CSSTransition key={_id} timeout={500} classNames='fade'>
               <ListGroupItem>
+                {name}
                 {props.isAuthenticated ? (
                   <Button
-                    className='remove-btn'
+                    className='remove-btn float-right'
                     color='danger'
                     size='sm'
                     onClick={() => {
@@ -29,8 +30,6 @@ const ShoppingList = props => {
                     &times;
                   </Button>
                 ) : null}
-
-                {name}
               </ListGroupItem>
             </CSSTransition>
           ))}
