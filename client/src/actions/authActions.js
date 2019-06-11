@@ -3,7 +3,10 @@ import {
   USER_LOADING,
   USER_LOADED,
   REGISTER_SUCCESS,
-  REGISTER_FAIL
+  REGISTER_FAIL,
+  LOGOUT_SUCCESS,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL
 } from './types';
 import axios from 'axios';
 import { returnErrors } from './errorActions';
@@ -57,6 +60,43 @@ export const register = ({ name, email, password }) => dispatch => {
         type: REGISTER_FAIL
       });
     });
+};
+
+// Login User
+export const login = ({ email, password }) => dispatch => {
+  // Headers
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  // Request body
+  const body = JSON.stringify({ email, password });
+
+  axios
+    .post('/api/auth', body, config)
+    .then(res =>
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data
+      })
+    )
+    .catch(err => {
+      dispatch(
+        returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL')
+      );
+      dispatch({
+        type: LOGIN_FAIL
+      });
+    });
+};
+
+// Logout User
+export const logout = () => {
+  return {
+    type: LOGOUT_SUCCESS
+  };
 };
 
 // Setup config/headers and token
