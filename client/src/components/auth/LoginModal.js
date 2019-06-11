@@ -22,12 +22,6 @@ const LoginModal = props => {
   const [password, setPassword] = useState('');
   const [msg, setMsg] = useState(null);
 
-  // const toggle = () => {
-  //   // Clear errors
-  //   props.clearErrors();
-  //   setModal(!modal);
-  // };
-
   const toggle = useCallback(() => {
     // Clear errors
     props.clearErrors();
@@ -36,6 +30,11 @@ const LoginModal = props => {
 
   const onSubmit = e => {
     e.preventDefault();
+
+    const user = { email, password };
+
+    // Attempt to login
+    props.login(user);
   };
 
   const { error, isAuthenticated } = props;
