@@ -14,6 +14,7 @@ import {
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { register } from '../../actions/authActions';
+import { clearErrors } from '../../actions/errorActions';
 
 const RegisterModal = props => {
   const [modal, setModal] = useState(false);
@@ -23,6 +24,8 @@ const RegisterModal = props => {
   const [msg, setMsg] = useState(null);
 
   const toggle = () => {
+    // Clear errors
+    props.clearErrors();
     setModal(!modal);
   };
 
@@ -39,15 +42,22 @@ const RegisterModal = props => {
     props.register(newUser);
   };
 
-  const { error } = props;
+  const { error, isAuthenticated } = props;
 
   useEffect(() => {
+    console.log(error);
     if (error.id === 'REGISTER_FAIL') {
       setMsg(error.msg);
     } else {
       setMsg(null);
     }
-  }, [error]);
+
+    // If authenticated, close modal
+    console.log(isAuthenticated);
+    if (modal && isAuthenticated) {
+      toggle();
+    }
+  }, [error, isAuthenticated]);
 
   return (
     <div>
@@ -106,7 +116,8 @@ const RegisterModal = props => {
 RegisterModal.propTypes = {
   isAuthenticated: PropTypes.bool,
   error: PropTypes.object.isRequired,
-  register: PropTypes.func.isRequired
+  register: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -116,5 +127,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { register }
+  { register, clearErrors }
 )(RegisterModal);
